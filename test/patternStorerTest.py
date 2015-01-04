@@ -13,6 +13,11 @@ class PatternStoringTest(unittest.TestCase):
         percentage = self.patternStorer.percentChange(2, 3)
         self.assertEquals(percentage, 50)
 
+    def test_movements_from_negative_values(self):
+        percentageOne, percentageTwo = self.patternStorer.percentChange(-10,10), self.patternStorer.percentChange(10,-10)
+        self.assertEquals(percentageOne, 200.00)
+        self.assertEquals(percentageTwo, -200.00)
+
     def test_generation_of_patterns(self):
         avgLine = [1,2,3,4,5,6,7,8,9,10]
         pattern = []

@@ -8,7 +8,6 @@ class Data:
         self.date = date
         self.bid = bid
         self.ask = ask
-        self.averageLine(bid, ask)
 
-    def averageLine(self, bid, ask):
-        return ((bid+ask)/2)
+    def averageLine(self):
+        return ((self.bid+self.ask)/2)
