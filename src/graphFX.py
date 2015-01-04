@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import numpy as np
-from data import Data
+
+from src.data import Data
 
 
 class GraphFX:

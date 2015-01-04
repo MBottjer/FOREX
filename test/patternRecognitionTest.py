@@ -1,15 +1,16 @@
 import unittest
-from data import Data
-from patternRecogniser import PatternRecogniser
+
+from src.data import Data
+from src.patternStorer import PatternStorer
 
 
-class PatternRecognitionTest(unittest.TestCase):
+class PatternStoringTest(unittest.TestCase):
     def setUp(self):
-        self.patterRecogniser = PatternRecogniser()
+        self.patternStorer = PatternStorer()
         self.data = Data('testData/testDataTwo.txt')
 
     def test_percentage_change(self):
-        percentage = self.patterRecogniser.percentChange(2, 3)
+        percentage = self.patternStorer.percentChange(2, 3)
         self.assertEquals(percentage, 50)
 
     def test_generation_of_patterns(self):
@@ -17,7 +18,7 @@ class PatternRecognitionTest(unittest.TestCase):
         pattern = []
         patternLength = 2
         startingPoint = 2
-        self.patterRecogniser.generateIndividualPatterns(avgLine,pattern,patternLength,startingPoint)
+        self.patternStorer.generateIndividualPatterns(avgLine,pattern,patternLength,startingPoint)
         self.assertEquals(pattern, [100.0, 200.0])
 
 
