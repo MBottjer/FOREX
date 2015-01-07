@@ -4,31 +4,35 @@ from src.data import Data
 
 class PatternStorer:
 
+    # Pattern storer should have a constructor that takes a data object
+
+    def __init__(self, data):
+        self.avgLine = data.averageLine()
+
     allPatterns = []
     outcomeArray = []
 
     def percentChange(self, startPoint, currentPoint):
         return ((float(currentPoint) - startPoint) / abs(startPoint))*100.00
 
-    def generateIndividualPatterns(self, avgLine, pattern, patternLength, startingPoint):
+    def generateIndividualPatterns(self, pattern, patternLength, startingPoint):
         oneLessPatternLength = patternLength - 1
         while oneLessPatternLength >= 0:
-            pattern.append(self.percentChange(avgLine[startingPoint - patternLength],
-                                              avgLine[startingPoint - oneLessPatternLength]))
+            pattern.append(self.percentChange(self.avgLine[startingPoint - patternLength],
+                                              self.avgLine[startingPoint - oneLessPatternLength]))
             oneLessPatternLength -= 1
 
-    def patternStorage(self, startingPoint, patternLength, data):
-        avgLine = data.averageLine()
-        usableData = len(avgLine) - 30
+    def patternStorage(self, startingPoint, patternLength):
+        usableData = len(self.avgLine) - 30
         patternStorageStartTime = time.time()
 
         while startingPoint < usableData:
             pattern = []
 
-            self.generateIndividualPatterns(avgLine, pattern, patternLength, startingPoint)
+            self.generateIndividualPatterns(pattern, patternLength, startingPoint)
 
-            outcomeRange = avgLine[startingPoint+20: startingPoint+30]
-            currentPoint = avgLine[startingPoint]
+            outcomeRange = self.avgLine[startingPoint+20: startingPoint+30]
+            currentPoint = self.avgLine[startingPoint]
 
             # self.printOutcomeComparison(outcomeRange, currentPoint, pattern)
             try:
@@ -47,11 +51,11 @@ class PatternStorer:
 
         self.printPatternDetails(self.allPatterns, self.outcomeArray, patternStorageStartTime, endTime)
 
-    # def patternRecognition(self):
-    #     patternForRecognition = []
-    #
-    #     for x in range(-10, -1):
-    #         patternForRecognition.append(self.percentChange(av))
+    def patternRecognition(self):
+        patternForRecognition = []
+
+        for x in range(-10, 0):
+            patternForRecognition.append(self.percentChange(self.avgLine[-11], self.avgLine[x]))
 
     def printPatternDetails(self, allPatterns, outcomeArray, startTime, endTime):
         print len(allPatterns)
@@ -68,7 +72,7 @@ class PatternStorer:
     def calculatePatternStorageTime(self, startTime, endTime):
         print 'Patter storage took:', endTime - startTime, 'seconds'
 
-pR = PatternStorer()
 data = Data('../data/GBPUSD1d.txt')
+pR = PatternStorer(data)
 
-pR.patternStorage(10, 10, data)
+pR.patternStorage(10, 10)

@@ -26,6 +26,9 @@ class PatternStoringTest(unittest.TestCase):
         self.patternStorer.generateIndividualPatterns(avgLine,pattern,patternLength,startingPoint)
         self.assertEquals(pattern, [100.0, 200.0])
 
+    def test_patter_finder(self):
+
+
 
 if __name__ == '__main__':
     unittest.main()
