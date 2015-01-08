@@ -11,6 +11,7 @@ class PatternStorer:
 
     allPatterns = []
     outcomeArray = []
+    patternForRecognition = []
 
     def percentChange(self, startPoint, currentPoint):
         return ((float(currentPoint) - startPoint) / abs(startPoint))*100.00
@@ -51,11 +52,31 @@ class PatternStorer:
 
         self.printPatternDetails(self.allPatterns, self.outcomeArray, patternStorageStartTime, endTime)
 
-    def patternRecognition(self):
-        patternForRecognition = []
-
+    def currentPattern(self):
         for x in range(-10, 0):
-            patternForRecognition.append(self.percentChange(self.avgLine[-11], self.avgLine[x]))
+            self.patternForRecognition.append(self.percentChange(self.avgLine[-11], self.avgLine[x]))
+        print self.patternForRecognition
+
+    def patternRecognition(self):
+        similarityOfPatterns = []
+        for eachPattern in self.allPatterns:
+            individualSimilarityPercentages = []
+            for x in range(0,10):
+                individualSimilarityPercentages.append(100 - abs(self.percentChange(eachPattern[0], self.currentPattern()[0])))
+            similarity = reduce(lambda x, y: x+y, individualSimilarityPercentages) / float(len(individualSimilarityPercentages))
+            self.determinePattersWithSimilarity(similarity, 90, eachPattern)
+            similarityOfPatterns.append(similarity)
+
+    def determinePatternsWithSimilarity(self, similarity, percentage, pattern):
+        if similarity > percentage:
+            patternIndex = self.allPatterns.index(pattern)
+
+        print "Pattern for recognition:"
+        print self.patternForRecognition
+        print "========================"
+        print pattern
+        print "The predicted outcome is" + self.outcomeArray[patternIndex]
+
 
     def printPatternDetails(self, allPatterns, outcomeArray, startTime, endTime):
         print len(allPatterns)
@@ -76,3 +97,4 @@ data = Data('../data/GBPUSD1d.txt')
 pR = PatternStorer(data)
 
 pR.patternStorage(10, 10)
+pR.currentPattern()
