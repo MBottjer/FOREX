@@ -4,8 +4,6 @@ from src.data import Data
 
 class PatternStorer:
 
-    # Pattern storer should have a constructor that takes a data object
-
     def __init__(self, data):
         self.calculate = Calculator()
         self.avgLine = data.averageLine()
@@ -93,8 +91,8 @@ class PatternStorer:
     def calculatePatternStorageTime(self, startTime, endTime):
         print 'Pattern storage took:', endTime - startTime, 'seconds'
 
-data = Data('../data/GBPUSD1d.txt')
-pR = PatternStorer(data)
-
-pR.patternStorage(10, 10)
-pR.currentPattern()
+# data = Data('../data/GBPUSD1d.txt')
+# pR = PatternStorer(data)
+#
+# pR.patternStorage(10, 10)
+# pR.currentPattern()
