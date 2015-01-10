@@ -3,9 +3,10 @@ from src.Calculator import Calculator
 
 class PatternFinder:
 
-    def __init__(self, acceptedPercentageSimilarity):
+    def __init__(self, acceptedPercentageSimilarity, patternStorer):
         self.acceptedPercentageSimilarity = acceptedPercentageSimilarity
         self.calculate = Calculator()
+        self.patternStorer = patternStorer
 
     def patternRecognition(self, allPatterns, currentPattern):
         similarityOfPatterns = []
@@ -29,10 +30,10 @@ class PatternFinder:
             patternIndex = allPatterns.index(pattern)
 
             print "Pattern for recognition:"
-            print self.patternForRecognition
+            print self.patternStorer.patternForRecognition
             print "========================"
             print pattern
             print "------------------------"
             print "The predicted outcome is:"
-            print self.outcomeArray[patternIndex]
+            print self.patternStorer.outcomeArray[patternIndex]
             print "------------------------"
