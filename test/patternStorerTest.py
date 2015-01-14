@@ -9,10 +9,6 @@ class PatternStoringTest(unittest.TestCase):
         self.patternStorer = PatternStorer()
         self.data = Data('testData/testDataTwo.txt')
 
-    def test_percentage_change(self):
-        percentage = self.patternStorer.percentChange(2, 3)
-        self.assertEquals(percentage, 50)
-
     def test_movements_from_negative_values(self):
         percentageOne, percentageTwo = self.patternStorer.percentChange(-10,10), self.patternStorer.percentChange(10,-10)
         self.assertEquals(percentageOne, 200.00)
