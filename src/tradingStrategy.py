@@ -2,18 +2,23 @@ from src.data import Data
 from src.patternFinder import PatternFinder
 from src.patternStorer import PatternStorer
 
-
-class TradingStrategy:
-
-    def __init__(self, data):
-        self.patternStorer = PatternStorer(data)
-        self.patternFinder = PatternFinder(70, self.patternStorer)
-
-    def executePatternRecognition(self):
-        self.patternStorer.patternStorage(10, 10)
-        self.patternStorer.currentPattern()
-        self.patternFinder.patternRecognition(self.patternStorer.allPatterns, self.patternStorer.patternForRecognition)
-
+# setup data
+dataLengthToAnalyse = 100
 data = Data('/Users/mbottjer/Documents/personalProjects/patternRecognition/data/GBPUSD1d.txt')
-tradingStrategy = TradingStrategy(data)
-tradingStrategy.executePatternRecognition()
+avgLine = data.averageLine()
+
+# initialise patternStorer and patternFinder
+patternFinder = PatternFinder(40)
+
+# loop through data, first analysing 100 data points
+
+while dataLengthToAnalyse < data.dataLength():
+    dataToBeAnalysed = avgLine[:dataLengthToAnalyse]
+
+    patternStorer = PatternStorer(dataToBeAnalysed)
+    patternStorer.patternStorage(30, 30)
+    patternStorer.currentPattern(30)
+
+    patternFinder.patternRecognition(patternStorer)
+
+    dataLengthToAnalyse += 1

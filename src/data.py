@@ -11,3 +11,8 @@ class Data:
 
     def averageLine(self):
         return ((self.bid+self.ask)/2)
+
+    def dataLength(self):
+        dataLength = int(self.bid.shape[0])
+        print 'data length is:', dataLength
+        return dataLength

@@ -1,39 +1,40 @@
 from src.Calculator import Calculator
+from src.graphFX import GraphFX
 
 
 class PatternFinder:
 
-    def __init__(self, acceptedPercentageSimilarity, patternStorer):
+    def __init__(self, acceptedPercentageSimilarity):
         self.acceptedPercentageSimilarity = acceptedPercentageSimilarity
         self.calculate = Calculator()
-        self.patternStorer = patternStorer
 
-    def patternRecognition(self, allPatterns, currentPattern):
+    def patternRecognition(self, storedPattern):
         similarityOfPatterns = []
-        for eachPattern in allPatterns:
+        for eachPattern in storedPattern.allPatterns:
             individualSimilarityPercentages = []
-            self.createArrayOfSimilarities(eachPattern, currentPattern, individualSimilarityPercentages)
+            self.createArrayOfSimilarities(eachPattern, storedPattern.patternForRecognition, individualSimilarityPercentages)
             similarity = self.averagePointToPointSimilarities(individualSimilarityPercentages)
-            self.determinePatternsWithSimilarity(similarity, self.acceptedPercentageSimilarity, eachPattern, allPatterns)
+            self.determinePatternsWithSimilarity(similarity, self.acceptedPercentageSimilarity, eachPattern, storedPattern)
             similarityOfPatterns.append(similarity)
 
     def createArrayOfSimilarities(self, pattern, currentPattern, individualSimilarityPercentages):
-        for x in range(0,10):
-            individualSimilarityPercentages.append(100 - abs(self.calculate.percentChange(pattern[x], currentPattern[x])))
+        for x in range(0,len(pattern)):
+            individualSimilarityPercentages.append(100 - abs(self.calculate.percentChangeOf(pattern[x], currentPattern[x])))
 
     def averagePointToPointSimilarities(self, arrayOfPercentages):
-        similarity = reduce(lambda x, y: x+y, arrayOfPercentages) / len(arrayOfPercentages)
-        return similarity
+        return reduce(lambda x, y: x+y, arrayOfPercentages) / len(arrayOfPercentages)
 
-    def determinePatternsWithSimilarity(self, similarity, percentage, pattern, allPatterns):
+    def determinePatternsWithSimilarity(self, similarity, percentage, pattern, storedPattern):
         if similarity > percentage:
-            patternIndex = allPatterns.index(pattern)
+            patternIndex = storedPattern.allPatterns.index(pattern)
 
             print "Pattern for recognition:"
-            print self.patternStorer.patternForRecognition
+            print storedPattern.patternForRecognition
             print "========================"
             print pattern
             print "------------------------"
             print "The predicted outcome is:"
-            print self.patternStorer.outcomeArray[patternIndex]
+            print storedPattern.outcomeArray[patternIndex]
             print "------------------------"
+            graph = GraphFX()
+            graph.plotPatternForRecognitionAgainstCurrentPattern(storedPattern.patternForRecognition, pattern)

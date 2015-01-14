@@ -1,6 +1,6 @@
 class Calculator:
 
-    def percentChange(self, startPoint, currentPoint):
+    def percentChangeOf(self, startPoint, currentPoint):
         try:
             x = ((float(currentPoint) - startPoint) / abs(startPoint))*100.00
             if x == 0.0:

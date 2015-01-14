@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from py2app.recipes import numpy
 
 from src.data import Data
 
@@ -30,6 +31,9 @@ class GraphFX:
         plt.grid(True)
         plt.show()
 
-graph = GraphFX()
-
-graph.graphRawFX()
+    def plotPatternForRecognitionAgainstCurrentPattern(self, patternForRecognition, eachPattern):
+        xAxis = range(1,31)
+        fig = plt.figure()
+        plt.plot(xAxis, patternForRecognition)
+        plt.plot(xAxis, eachPattern)
+        plt.show()
