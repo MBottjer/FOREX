@@ -30,7 +30,7 @@ class PatternStorer:
             outcomeRange = self.data[startingPoint + 20: startingPoint + 30]
             currentPoint = self.data[startingPoint]
 
-            futureOutcome = self.calculate.percentChangeOf(currentPoint, self.averageOf(outcomeRange))
+            futureOutcome = self.calculate.percentChangeOf(currentPoint, self.calculate.averageOf(outcomeRange))
             self.allPatterns.append(pattern)
             self.outcomeArray.append(futureOutcome)
 
@@ -39,13 +39,6 @@ class PatternStorer:
         endTime = time.time()
 
         self.printPatternDetails(self.allPatterns, self.outcomeArray, patternStorageStartTime, endTime)
-
-    def averageOf(self, array):
-        try:
-            return reduce(lambda pointOne, pointTwo: pointOne + pointTwo, array) / len(array)
-        except Exception as e:
-            print str(e)
-            return 0
 
     def currentPattern(self, patternLength):
         for x in range(-(patternLength), 0):

@@ -7,22 +7,19 @@ class PatternFinder:
     def __init__(self, acceptedPercentageSimilarity):
         self.acceptedPercentageSimilarity = acceptedPercentageSimilarity
         self.calculate = Calculator()
+        self.similarityOfPatterns = []
 
     def patternRecognition(self, storedPattern):
-        similarityOfPatterns = []
         for eachPattern in storedPattern.allPatterns:
             individualSimilarityPercentages = []
             self.createArrayOfSimilarities(eachPattern, storedPattern.patternForRecognition, individualSimilarityPercentages)
-            similarity = self.averagePointToPointSimilarities(individualSimilarityPercentages)
+            similarity = self.calculate.averageOf(individualSimilarityPercentages)
             self.determinePatternsWithSimilarity(similarity, self.acceptedPercentageSimilarity, eachPattern, storedPattern)
-            similarityOfPatterns.append(similarity)
+            self.similarityOfPatterns.append(similarity)
 
     def createArrayOfSimilarities(self, pattern, currentPattern, individualSimilarityPercentages):
         for x in range(0,len(pattern)):
             individualSimilarityPercentages.append(100 - abs(self.calculate.percentChangeOf(pattern[x], currentPattern[x])))
-
-    def averagePointToPointSimilarities(self, arrayOfPercentages):
-        return reduce(lambda x, y: x+y, arrayOfPercentages) / len(arrayOfPercentages)
 
     def determinePatternsWithSimilarity(self, similarity, percentage, pattern, storedPattern):
         if similarity > percentage:
