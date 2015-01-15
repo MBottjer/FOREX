@@ -25,8 +25,9 @@ class CalculatorTest(unittest.TestCase):
         self.assertEquals(percentage, 1e-12)
 
     def test_percentage_change_with_negative_values(self):
-        percentage = self.calculator.percentChangeOf(-1,2)
-        self.assertEquals(percentage, 300)
+        percentageOne, percentageTwo = self.calculator.percentChangeOf(-10,10), self.calculator.percentChangeOf(10,-10)
+        self.assertEquals(percentageOne, 200.00)
+        self.assertEquals(percentageTwo, -200.00)
 
 if __name__ == '__main__':
     unittest.main()
