@@ -4,12 +4,13 @@ from src.data import Data
 
 
 class PatternStorer:
-    def __init__(self, data):
+    def __init__(self, data, totalAverageData):
         self.calculate = Calculator()
         self.data = data
         self.allPatterns = []
         self.outcomeArray = []
         self.patternForRecognition = []
+        self.totalAverageData = totalAverageData
 
     def generateIndividualPatterns(self, pattern, patternLength, startingPoint):
         oneLessPatternLength = patternLength - 1
@@ -20,6 +21,7 @@ class PatternStorer:
 
     def patternStorage(self, startingPoint, patternLength):
         usableData = len(self.data) - 60
+        # print usableData, "usable points"
         patternStorageStartTime = time.time()
 
         while startingPoint < usableData:
@@ -46,8 +48,8 @@ class PatternStorer:
                 self.calculate.percentChangeOf(self.data[-(patternLength + 1)], self.data[x]))
 
     def printPatternDetails(self, allPatterns, outcomeArray, startTime, endTime):
-        print len(allPatterns)
-        print len(outcomeArray)
+        print len(allPatterns), "patterns"
+        print len(outcomeArray), "outcomes"
         self.calculatePatternStorageTime(startTime, endTime)
 
     def calculatePatternStorageTime(self, startTime, endTime):

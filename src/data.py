@@ -14,5 +14,5 @@ class Data:
 
     def dataLength(self):
         dataLength = int(self.bid.shape[0])
-        print 'data length is:', dataLength
+        # print 'data length is:', dataLength
         return dataLength
